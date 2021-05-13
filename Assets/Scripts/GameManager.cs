@@ -6,8 +6,14 @@ public class GameManager : MonoBehaviour
 {
     public PlayerController PlayerController { get; private set; }
 
+    public Transform player;
+
+
     private void Awake()
     {
-        this.PlayerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        this.PlayerController = player.GetComponent<PlayerController>();
+
+        player.GetChild(GameInfo.Instance.CharacterIndex).gameObject.SetActive(true);
     }
 }
