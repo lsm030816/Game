@@ -37,4 +37,12 @@ public class InputController : MonoBehaviour, PlayerInputAction.IPlayerActions
         gameManager.PlayerController.SetAxis(axis);
 
     }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            gameManager.PlayerController.TryJump();
+        }
+    }
 }
