@@ -28,17 +28,13 @@ public class InputController : MonoBehaviour, PlayerInputAction.IPlayerActions
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (context.started)
+        {
+            return;
+        }
+
         Vector2 axis = context.ReadValue<Vector2>();
+        gameManager.PlayerController.SetAxis(axis);
 
-        if (context.performed)
-        {
-            gameManager.PlayerController.StopCoroutine("Move");
-            gameManager.PlayerController.StartCoroutine("Move", axis);
-        }
-
-        if (context.canceled)
-        {
-            gameManager.PlayerController.StopCoroutine("Move");
-        }
     }
 }
