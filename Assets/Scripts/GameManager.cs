@@ -6,14 +6,15 @@ public class GameManager : MonoBehaviour
 {
     public PlayerController PlayerController { get; private set; }
 
-    public Transform player;
+    public Transform startPoint;
+    public GameObject playerPrefab;
 
 
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        this.PlayerController = player.GetComponent<PlayerController>();
+        GameObject obj = Instantiate(playerPrefab, startPoint.position, startPoint.rotation);
+        this.PlayerController = obj.GetComponent<PlayerController>();
 
-        player.GetChild(GameInfo.Instance.CharacterIndex).gameObject.SetActive(true);
+        obj.transform.GetChild(GameInfo.Instance.CharacterIndex).gameObject.SetActive(true);
     }
 }

@@ -28,6 +28,7 @@ public class InputController : MonoBehaviour, PlayerInputAction.IPlayerActions
 
     public void OnMove(InputAction.CallbackContext context)
     {
+
         if (context.started)
         {
             return;
