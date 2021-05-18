@@ -28,6 +28,7 @@ public class InputController : MonoBehaviour, PlayerInputAction.IPlayerActions
 
     public void OnMove(InputAction.CallbackContext context)
     {
+
         if (context.started)
         {
             return;
@@ -36,5 +37,13 @@ public class InputController : MonoBehaviour, PlayerInputAction.IPlayerActions
         Vector2 axis = context.ReadValue<Vector2>();
         gameManager.PlayerController.SetAxis(axis);
 
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            gameManager.PlayerController.TryJump();
+        }
     }
 }
