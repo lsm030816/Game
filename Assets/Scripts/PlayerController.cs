@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool isGrounded;
 
     [SerializeField] private Vector2 axis;
+
+    public HashSet<string> npcList;
     
     
 
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
 
         isGrounded = true;
+
+        npcList = new HashSet<string>();
     }
     public void SetAxis(Vector2 axis)
     {

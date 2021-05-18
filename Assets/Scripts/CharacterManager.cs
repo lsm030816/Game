@@ -12,7 +12,7 @@ public class CharacterManager : MonoBehaviour
     private void Start()
     {
         GameInfo.Instance.CharacterIndex = 0;
-        characters = new GameObject[character.childCount];
+        characters = new GameObject[character.childCount - 1];
 
         for (int i = 0; i < characters.Length; i++)
         {

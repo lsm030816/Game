@@ -4,17 +4,48 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public PlayerController PlayerController { get; private set; }
+ 
 
     public Transform startPoint;
     public GameObject playerPrefab;
+    public PlayerController PlayerController { get; private set; }
 
+    public GameObject npcPrefab;
+    public Dictionary<string, NpcController> npcControllers;
+
+    HashSet<int> randomNum;
 
     private void Awake()
     {
-        GameObject obj = Instantiate(playerPrefab, startPoint.position, startPoint.rotation);
-        this.PlayerController = obj.GetComponent<PlayerController>();
+        randomNum = new HashSet<int>();
+        npcControllers = new Dictionary<string, NpcController>();
 
-        obj.transform.GetChild(GameInfo.Instance.CharacterIndex).gameObject.SetActive(true);
+        GameObject player = Instantiate(playerPrefab, startPoint.position, startPoint.rotation);
+        this.PlayerController = player.GetComponent<PlayerController>();
+
+        player.transform.GetChild(GameInfo.Instance.CharacterIndex).gameObject.SetActive(true);
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            GameObject npc = Instantiate(npcPrefab, child.position, child.rotation);
+            NpcController npcController = npc.GetComponent<NpcController>();
+            
+            int randomIndex;
+            do
+            {
+                randomIndex = Random.Range(0, 60);
+            }
+            while (randomNum.Contains(randomIndex));
+
+            randomNum.Add(randomIndex);
+
+            Transform childObj = npc.transform.GetChild(randomIndex);
+            childObj.gameObject.SetActive(true);
+            string[] words = childObj.name.Split('_');
+            npc.name = $"NPC_{words[2]}{words[3]}";
+
+            npcControllers.Add(npc.name, npcController);
+        }
     }
 }
