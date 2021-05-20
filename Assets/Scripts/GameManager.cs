@@ -4,24 +4,27 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
- 
+    [SerializeField] Chat chat;
 
     public Transform startPoint;
     public GameObject playerPrefab;
     public PlayerController PlayerController { get; private set; }
 
     public GameObject npcPrefab;
-    public Dictionary<string, NpcController> npcControllers;
+    private Dictionary<string, NpcController> npcControllers;
 
     HashSet<int> randomNum;
 
     private void Awake()
     {
+        chat = GetComponent<Chat>();
+
         randomNum = new HashSet<int>();
         npcControllers = new Dictionary<string, NpcController>();
 
         GameObject player = Instantiate(playerPrefab, startPoint.position, startPoint.rotation);
         this.PlayerController = player.GetComponent<PlayerController>();
+        this.PlayerController.gameManager = this;
 
         player.transform.GetChild(GameInfo.Instance.CharacterIndex).gameObject.SetActive(true);
 
@@ -47,5 +50,23 @@ public class GameManager : MonoBehaviour
 
             npcControllers.Add(npc.name, npcController);
         }
+    }
+
+    public void ConnectNPC(string npcName)
+    {
+        if (npcControllers.ContainsKey(npcName))
+        {
+            npcControllers[npcName].GoTalk();
+            chat.OpenChat();
+            JsonData jsonData  = GameInfo.Instance.jsonData;
+            chat.SetText(jsonData.conversation[0].talk);
+        }
+
+    }
+
+    public void DisconnectNPC(string npcName)
+    {
+        npcControllers[npcName].StopTalk();
+        chat.CloseChat();
     }
 }

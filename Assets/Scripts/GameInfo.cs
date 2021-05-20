@@ -5,4 +5,6 @@ using UnityEngine;
 public class GameInfo : GenericSingleton<GameInfo>
 {
     public int CharacterIndex { get; set; }
+
+    public JsonData jsonData;
 }

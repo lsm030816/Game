@@ -7995,7 +7995,7 @@ GameObject:
   - component: {fileID: 1599548097153108327}
   - component: {fileID: 9125403667904499598}
   - component: {fileID: 599051262}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}

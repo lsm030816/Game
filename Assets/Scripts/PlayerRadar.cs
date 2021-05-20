@@ -14,17 +14,23 @@ public class PlayerRadar : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-        InvokeRepeating("FindTarget", 0.5f, 0.5f);
-    }
 
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (LayerMask.LayerToName(other.gameObject.layer).Equals("Character"))
         {
-            playerController.npcList.Add(other.name);
+            string[] types = other.gameObject.name.Split('_');
+            switch (types[0])
+            {
+                case "NPC":
+                    playerController.FindNPC(other.name);
+                    break;
+                default:
+                    break;
+            }
+        
         }
 
     }
@@ -33,7 +39,15 @@ public class PlayerRadar : MonoBehaviour
     {
         if (LayerMask.LayerToName(other.gameObject.layer).Equals("Character"))
         {
-            playerController.npcList.Remove(other.name);
+            string[] types = other.gameObject.name.Split('_');
+            switch (types[0])
+            {
+                case "NPC":
+                    playerController.RemoveNPC(other.name);
+                    break;
+                default:
+                    break;
+            }
         }
 
     }

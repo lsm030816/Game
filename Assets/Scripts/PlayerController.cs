@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
+    public GameManager gameManager;
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody rigid;
 
@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 axis;
 
     public HashSet<string> npcList;
-    
-    
+
+
 
     private void Awake()
     {
@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     {
         this.axis = axis;
         animator.SetFloat("Speed", axis.magnitude);
-    
+
         float horizontal = axis.x;
         float vertical = axis.y;
 
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
 
     public void TryJump()
     {
-        
+
         if (isGrounded)
         {
             animator.SetTrigger("Jump");
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
             rigid.AddForce(Vector3.up * 300f);
             StartCoroutine(Jump());
         }
-     
+
     }
 
     IEnumerator Jump()
@@ -84,5 +84,18 @@ public class PlayerController : MonoBehaviour
         isGrounded = true;
         yield return null;
     }
+
+    public void FindNPC(string npcName)
+    {
+        npcList.Add(npcName);
+        gameManager.ConnectNPC(npcName);
+    }
+
+    public void RemoveNPC(string npcName)
+    {
+        npcList.Remove(npcName);
+        gameManager.DisconnectNPC(npcName);
+    }
+
 
 }

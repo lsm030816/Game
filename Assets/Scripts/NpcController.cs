@@ -42,4 +42,14 @@ public class NpcController : MonoBehaviour
         yield return null;
     }
 
+    public void GoTalk()
+    {
+        Debug.Log($"{gameObject.name} : can talk");
+    }
+
+    public void StopTalk()
+    {
+        Debug.Log($"{gameObject.name} : can not talk");
+    }
+
 }
